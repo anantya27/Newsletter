@@ -2,6 +2,7 @@ const express=require("express");
 const bodyParser=require("body-parser");
 const request=require("request");
 const https=require("https");
+const api=require(__dirname+"/api.js");
 
 const app=express();
 app.use(bodyParser.urlencoded({extended:true}));
@@ -27,10 +28,11 @@ app.post("/",function(req,res){
     }
   const jsonData = JSON.stringify(data);
 
-  const url = "https://us7.api.mailchimp.com/3.0/lists/5915b3b880";
+
+  const url = "https://us7.api.mailchimp.com/3.0/lists/"+api.audience_id;
   const options = {
     method: "POST",
-    auth: "anantya:ed34ed75d10527eb89b89c3170198f8f-us7"
+    auth: "anantya:"+api.key
   }
 
   const request = https.request(url, options, function(response) {
@@ -58,9 +60,3 @@ app.post("/failure",function(req,res){
 app.listen(process.env.PORT || 3000,function(){
   console.log("server is up and running at port 3000");
 })
-
-// API key
-// 57a8765953a5c7ec6deaf6a58c13d95a-us7
-
-// list id
-// 5915b3b880
